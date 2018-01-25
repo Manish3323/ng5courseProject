@@ -1,35 +1,33 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-
-
 import { AppComponent } from './app.component';
-import { ShoppingListComponent } from './shoppingList/shopping-list/shopping-list.component';
-import { RecipeListComponent } from './recipeList/recipe-list/recipe-list.component';
-import { RecipeItemComponent } from './recipeList/recipe-item/recipe-item.component';
-import { RecipeDetailComponent } from './recipeList/recipe-detail/recipe-detail.component';
-import { HeaderComponent } from './header/header.component';
-import { ShoppingEditComponent } from './shoppingList/shopping-edit/shopping-edit.component';
-import { RecipesComponent } from './recipeList/recipes.component';
-import { DropdownDirective } from './shared/dropdown.directive';
-import { ShoppingListService } from './Services/shopping-list.service';
-import { RecipesService } from './Services/recipes.service';
+import { AppRoutingModule } from './app-routing.module';
+import { RecipesModule } from './recipes/recipes.module';
+import { SharedModule } from './shared/shared.module';
+import { AuthModule } from './auth/auth.module';
+import { ShoppinglistModule } from './shoppingList/shopping-list.module';
+import { CoreModule } from './core/core.module';
+import { StoreModule } from '@ngrx/store';
+import { reducers } from './store/app.reducer';
+
+
 
 @NgModule({
   declarations: [
-    AppComponent,
-    ShoppingListComponent,
-    RecipeListComponent,
-    RecipeItemComponent,
-    RecipeDetailComponent,
-    HeaderComponent,
-    ShoppingEditComponent,
-    RecipesComponent,
-    DropdownDirective
+    AppComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpClientModule,
+    AuthModule,
+    SharedModule,
+    RecipesModule,
+    AppRoutingModule,
+    ShoppinglistModule,
+    CoreModule,
+    StoreModule.forRoot(reducers)
   ],
-  providers: [ShoppingListService,RecipesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

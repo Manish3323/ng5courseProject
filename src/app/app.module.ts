@@ -29,7 +29,7 @@ import { AuthEffects } from './auth/store/auth.effects';
     ShoppingListModule,
     AuthModule,
     CoreModule,
-    StoreModule.forRoot(reducers),
+    StoreModule.forRoot({reducers}),
     EffectsModule.forRoot([AuthEffects]),
     StoreRouterConnectingModule,
     !environment.production ? StoreDevtoolsModule.instrument() : []

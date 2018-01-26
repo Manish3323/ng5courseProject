@@ -1,33 +1,35 @@
-import { Component } from '@angular/core';
-import { OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+// import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-import { RecipesService } from '../../Services/recipes.service';
-import { DataStorageService } from '../../shared/datastorage.service';
-import { Recipe } from '../../recipeList/recipe.model';
-import { AuthService } from '../../auth/auth.service';
-import * as fromApp from '../../store/app.reducer';
-import * as fromAuth from '../../auth/store/auth.reducer';
-
+import * as fromApp from '../../store/app.reducers';
+import * as fromAuth from '../../auth/store/auth.reducers';
+import * as AuthActions from '../../auth/store/auth.actions';
+import * as RecipeActions from '../../recipes/store/recipe.action';
 @Component({
   selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  templateUrl: './header.component.html'
 })
 export class HeaderComponent implements OnInit {
   authState: Observable<fromAuth.State>;
-  // tslint:disable-next-line:max-line-length
-  constructor(private dataService: DataStorageService, private store: Store <fromApp.AppState>,private recipeServ: RecipesService, public authService: AuthService){}
-  ngOnInit(){
+
+  constructor( private store: Store<fromApp.AppState>) {
+  }
+
+  ngOnInit() {
     this.authState = this.store.select('auth');
   }
-  saveRecipes() {
-    this.dataService.saveRecipes().subscribe((res: Promise<any>) => {
-      console.log(res);
-    });
+
+  onSaveData() {
+   this.store.dispatch(new RecipeActions.StoreRecipes());
   }
-  fetchRecipes() {
-    this.dataService.fetchRecipes();
+
+  onFetchData() {
+    this.store.dispatch(new RecipeActions.FetchRecipes());
+  }
+
+  onLogout() {
+    this.store.dispatch(new AuthActions.Logout());
   }
 }
